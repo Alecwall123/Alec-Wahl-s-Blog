@@ -292,7 +292,7 @@ $ Infant.Mortality &lt;dbl&gt; 22.2, 22.2, 20.2, 20.3, 20.6, 26.6, 23.6, 24.9, 2
 4 Education:Examination  0.00920    0.0145     0.637 5.28e- 1</code></pre>
 </div>
 </div>
-<p>As seen above, the p values for most of</p>
+<p>As seen above, the p values of all the varibales is below 0.05 so this means these are probably, significant predictor variables. But our interaction term has a p-value of .528 which is well above our significance level of 0.05. So what we will now do is test the models fits against each other.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>anova_result <span class="ot">&lt;-</span> <span class="fu">anova</span>(swissmodel1<span class="sc">$</span>fit,swissmodel2<span class="sc">$</span>fit) <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()<span class="sc">%&gt;%</span></span>
@@ -311,7 +311,7 @@ $ Infant.Mortality &lt;dbl&gt; 22.2, 22.2, 20.2, 20.3, 20.6, 26.6, 23.6, 24.9, 2
    1.952301    1.952301 </code></pre>
 </div>
 </div>
-<p>The last to</p>
+<p>The anova performed above tells us to go with the model with less variables, or in other words our model without the interaction term. The second test performed gives us the variation inflation factor of our two predictor variables from our original model. I ran this test because it allows us to know if there is collinearity between our predictor variables. Because both scores our below 5 this means that we shouldn’t have to worry about mutlicollinearity. This further supports the evidence that we probably do not need to add a interaction term.</p>
 
 
 

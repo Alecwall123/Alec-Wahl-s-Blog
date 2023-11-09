@@ -67,7 +67,7 @@ tidy(swissmodel2)
 
 ```
 
-As seen above, the p values for most of
+As seen above, the p values of all the varibales is below 0.05 so this means these are probably, significant predictor variables. But our interaction term has a p-value of .528 which is well above our significance level of 0.05. So what we will now do is test the models fits against each other.
 
 ```{r}
 
@@ -81,4 +81,4 @@ swissmodel1$fit%>%
 
 ```
 
-The last to
+The anova performed above tells us to go with the model with less variables, or in other words our model without the interaction term. The second test performed gives us the variation inflation factor of our two predictor variables from our original model. I ran this test because it allows us to know if there is collinearity between our predictor variables. Because both scores our below 5 this means that we shouldn't have to worry about mutlicollinearity. This further supports the evidence that we probably do not need to add a interaction term.
