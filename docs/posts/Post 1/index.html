@@ -305,7 +305,7 @@ argument.</code></pre>
 4 age_years       -0.0444  0.000828    -53.6  0       </code></pre>
 </div>
 </div>
-<p>Above, we chose to run a generalized linear model instead of a regular lm. This is due to our output being of a binomial nature. As seen above, our predictor variables have p values below a significance level of .05 besides episode number. At a biological level, this makes sense because Sepsis is an infection in the bloodstream from any number of different infections. Previous instances of Sepsis would not necessarily mean someone is at risk of further having Sepsis or is better protected from reinfection.</p>
+<p>Above, we chose to run a generalized linear model instead of a regular lm. This is due to our output being of a binomial nature. As seen above, our predictor variables have p values below a significance level of .05 besides episode number. At a biological level, this makes sense because Sepsis is an infection in the bloodstream from any number of different infections. Previous instances of Sepsis would not necessarily mean someone is at risk of further having Sepsis or is better protected from reinfection. So, previous episodes of Sepsis would not tell us much about survival chances.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model_summary2 <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">%&gt;%</span></span>
@@ -330,7 +330,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>SepsisDataUpdated <span class="ot">&lt;-</span> SepsisData <span class="sc">%&gt;%</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>episode_number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Our final decision will be to remove episode number and create new data as seen above.</p>
+<p>Our final decision will be to remove episode number and create a new data set as seen above.</p>
 
 
 

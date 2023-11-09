@@ -85,7 +85,7 @@ model_summary1 <- logistic_reg() %>%
 tidy(model_summary1)
 
 ```
-Above, we chose to run a generalized linear model instead of a regular lm. This is due to our output being of a binomial nature. As seen above, our predictor variables have p values below a significance level of .05 besides episode number. At a biological level, this makes sense because Sepsis is an infection in the bloodstream from any number of different infections. Previous instances of Sepsis would not necessarily mean someone is at risk of further having Sepsis or is better protected from reinfection.
+Above, we chose to run a generalized linear model instead of a regular lm. This is due to our output being of a binomial nature. As seen above, our predictor variables have p values below a significance level of .05 besides episode number. At a biological level, this makes sense because Sepsis is an infection in the bloodstream from any number of different infections. Previous instances of Sepsis would not necessarily mean someone is at risk of further having Sepsis or is better protected from reinfection. So, previous episodes of Sepsis would not tell us much about survival chances. 
 
 ```{r}
 model_summary2 <- logistic_reg() %>%
@@ -105,4 +105,4 @@ SepsisDataUpdated <- SepsisData %>%
   select(-episode_number)
 ```
 
-Our final decision will be to remove episode number and create new data as seen above.
+Our final decision will be to remove episode number and create a new data set as seen above.
