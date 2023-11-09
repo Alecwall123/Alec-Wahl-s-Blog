@@ -1,0 +1,110 @@
+---
+title: "Post #1 Sepsis Survival Analysis"
+author: "Alec Wahl"
+date: "2023-11-05"
+categories: [analysis]
+---
+
+![](images/sepsisphoto.jpg){width="390"}
+
+This is the first post in a Quarto blog. Welcome!
+
+In this post, we will analyze Sepsis Survival rates and concluded what possible variables can lead to higher mortality rates from sepsis. This data comes from a primary cohort of hospitalized subjects between 2011 and 2012 in Norway. Found on keggle open source\[Sepsis Survival Prediction\](https://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records)
+
+```{r}
+library(readr)
+library(parsnip)
+library(tidyverse)
+library(ggplot2)
+
+
+library(lmtest)
+library(broom)
+library(dplyr)
+```
+
+```{R}
+
+Sepsisdatakaggle <- read_csv("C:/Users/alecw/OneDrive/Desktop/Sepsisdatakaggle.csv", show_col_types = FALSE)
+
+
+```
+
+```{r}
+SepsisData <- Sepsisdatakaggle %>%
+  rename(Sex = sex_0male_1female) %>%
+  rename(hospitaloutcome=hospital_outcome_1alive_0dead)
+
+SepsisData %>%
+  mutate(Sex = ifelse(Sex > 0, 1, 0))
+
+
+```
+
+First, we load in the data set and rename a couple of the current Column names
+
+```{r}
+
+
+mortality_table <- SepsisData %>%
+  group_by(Sex, hospitaloutcome) %>%
+  summarise(count = n())
+print(mortality_table)
+mortality_table %>%
+  group_by(Sex) %>%
+  summarize(percent_survived = sum(count[hospitaloutcome == 1]) / sum(count) * 100)
+
+```
+
+Above is a mortality table created analyze the hospital outcome based on Sex. A hospital outcome of 1 indicates the patient survived. Sex equaling 1 indicates a male. As seen when analyzed both females and males have fairly similar survival rates at 92.15% for females and 93.18% for males.
+
+```{r}
+ggplot(SepsisData, aes(x = factor(age_years), fill = factor(hospitaloutcome==0))) +
+  geom_bar() +
+  labs(title = "Hospital Outcome by Age",
+       x = "Age",
+       y = "Count",
+       fill = "Hospital Outcome")+theme(axis.text.x = element_blank())
+
+
+
+```
+
+Graphed above we have the Hospital Outcomes for patients as age increases from 0-100. When it equals true that means we had a negative outcome, as seen above there is definitely an increase in negative outcomes as patients get older.
+
+
+```{r}
+SepsisData$Sex <- factor(SepsisData$Sex)
+SepsisData$hospitaloutcome <- factor(SepsisData$hospitaloutcome)
+```
+In code block above, we turn our continuous variables to factors so we can run log function correctly as they are binomial anyways.
+
+```{r}
+model_summary1 <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(hospitaloutcome ~ episode_number+Sex+age_years, data = SepsisData, family = "binomial")
+tidy(model_summary1)
+
+```
+Above we chose to run a generalize linear model instead of a regular lm this is due to our output being of a binomial nature. As seen above, of our predictor variables, all have p values below a significance level of .05 besides episode number. In some ways at a biological level this makes sense, due to the nature of sepsis being a infection in the blood stream from any number of different infections. Previous instances of sepsis would not necessary mean someone is at risk of further having Sepsis.
+
+```{r}
+model_summary2 <- logistic_reg() %>%
+  set_engine("glm") %>%
+  fit(hospitaloutcome ~Sex+age_years, data = SepsisData, family = "binomial")
+
+lr_test <- lrtest(model_summary1$fit, model_summary2$fit) %>%
+  print()
+
+
+```
+
+Our final change will be to remove the episode_number variable from the original dataset and analyze if the new model is a better fit with a lrtest. Due to the large P value > 0.05. We can assume the larger model including episode number does not necessarily indicate a significantly better fit.
+
+
+```{r}
+SepsisDataUpdated <- SepsisData %>%
+  select(-episode_number)
+```
+
+Our final decision then will be to as seen above, remove episode number and create a new data.

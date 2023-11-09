@@ -1,0 +1,84 @@
+---
+title: "Post #2- Swiss Analysis "
+author: "Alec Wahl"
+date: "2023-11-05"
+categories: [analysis]
+---
+
+![](images/swissflagdata.jpg){width="461" height="306"}
+
+We are doing are going to analyze, a built in r-dataset called "swiss" this is a dataset takenfrom various socioeconomic indicators from Swiss Provinces.
+
+```{r}
+library(readr)
+library(parsnip)
+library(tidyverse)
+library(ggplot2)
+
+library(car)
+
+library(lmtest)
+library(broom)
+library(dplyr)
+library(leaps)
+```
+
+```{r}
+
+data("swiss")
+
+swiss %>%
+  glimpse()
+
+```
+
+As seen above, this data has 6 including various different socioeconomic/fertility data from 47 different French-speaking Provinces.
+
+```{r}
+swiss %>%
+  ggplot(aes(x = Examination, y = Fertility)) +
+  geom_point() +
+  labs(title = "Fertility vs. Examination",
+       x = "Examination",
+       y = "Fertility")
+swiss %>%
+  ggplot(aes(x = Education, y = Fertility)) +
+  geom_point() +
+  labs(title = "Fertility vs. Education",
+       x = "Examination",
+       y = "Fertility")
+
+```
+
+Lets first graph, fertility vs examination, then fertility vs education. Due to the nature of education potentially affecting the score someone has on the examination I am going to analyze whether adding an interaction term between these two predictor variable will improve the quality of my model.
+
+```{r}
+
+swissmodel1 <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(Fertility ~ Education+Examination, data = swiss)
+tidy(swissmodel1)
+
+swissmodel2 <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(Fertility ~ Education+Examination+Education:Examination, data = swiss)
+tidy(swissmodel2)
+
+
+```
+
+As seen above, the p values for most of
+
+```{r}
+
+
+anova_result <- anova(swissmodel1$fit,swissmodel2$fit) %>%
+  tidy()%>%
+  print()
+
+swissmodel1$fit%>%
+  vif()
+
+```
+
+The last to
