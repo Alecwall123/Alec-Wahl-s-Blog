@@ -1,5 +1,5 @@
 ---
-title: "Post #2- Swiss Analysis "
+title: "Post #2 Swiss Analysis "
 author: "Alec Wahl"
 date: "2023-11-05"
 categories: [analysis]
