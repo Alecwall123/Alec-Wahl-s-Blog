@@ -9,7 +9,7 @@ categories: [analysis]
 
 This is the first post in a Quarto blog. Welcome!
 
-In this post, we will analyze Sepsis Survival rates and concluded what possible variables can lead to higher mortality rates from sepsis. This data comes from a primary cohort of hospitalized subjects between 2011 and 2012 in Norway. Found on keggle open source\[Sepsis Survival Prediction\](https://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records)
+In this post, we will analyze Sepsis Survival rates and conclude what possible variables can lead to higher mortality rates from sepsis. This data comes from a primary cohort of hospitalized subjects between 2011 and 2012 in Norway. Found on keggle open source\[Sepsis Survival Prediction\](https://www.kaggle.com/datasets/joebeachcapital/sepsis-survival-minimal-clinical-records)
 
 ```{r}
 library(readr)
