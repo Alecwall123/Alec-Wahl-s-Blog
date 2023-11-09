@@ -243,7 +243,7 @@ $ Catholic         &lt;dbl&gt; 9.96, 84.84, 93.40, 33.77, 5.16, 90.57, 92.85, 97
 $ Infant.Mortality &lt;dbl&gt; 22.2, 22.2, 20.2, 20.3, 20.6, 26.6, 23.6, 24.9, 21.0,…</code></pre>
 </div>
 </div>
-<p>As seen above, this data has 6 including various different socioeconomic/fertility data from 47 different French-speaking Provinces.</p>
+<p>As seen above, this data has 6 variables, including various socioeconomic/fertility data from 47 French-speaking Provinces.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>swiss <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Examination, <span class="at">y =</span> Fertility)) <span class="sc">+</span></span>
@@ -264,7 +264,7 @@ $ Infant.Mortality &lt;dbl&gt; 22.2, 22.2, 20.2, 20.3, 20.6, 26.6, 23.6, 24.9, 2
 <p><img src="index_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Lets first graph, fertility vs examination, then fertility vs education. Due to the nature of education potentially affecting the score someone has on the examination I am going to analyze whether adding an interaction term between these two predictor variable will improve the quality of my model.</p>
+<p>Let’s first graph fertility vs.&nbsp;examination, then fertility vs education. Due to the nature of education potentially affecting the score someone has on the examination, I will analyze whether adding an interaction term between these two predictor variables will improve the quality of my model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>swissmodel1 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span></span>
@@ -311,7 +311,7 @@ $ Infant.Mortality &lt;dbl&gt; 22.2, 22.2, 20.2, 20.3, 20.6, 26.6, 23.6, 24.9, 2
    1.952301    1.952301 </code></pre>
 </div>
 </div>
-<p>The anova performed above tells us to go with the model with less variables, or in other words our model without the interaction term. The second test performed gives us the variation inflation factor of our two predictor variables from our original model. I ran this test because it allows us to know if there is collinearity between our predictor variables. Because both scores our below 5 this means that we shouldn’t have to worry about mutlicollinearity. This further supports the evidence that we probably do not need to add a interaction term.</p>
+<p>The ANOVA performed above tells us to go with the model with fewer variables, or in other words, our model without the interaction term. The second test performed gives us the variation inflation factor of our two predictor variables from our original model. I ran this test because it allows us to know if there is collinearity between our predictor variables. Because both scores are below 5, we shouldn’t have to worry about multicollinearity. This further supports the evidence that we probably do not need to add an interaction term.</p>
 
 
 

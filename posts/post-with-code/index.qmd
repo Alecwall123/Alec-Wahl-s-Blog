@@ -32,7 +32,7 @@ swiss %>%
 
 ```
 
-As seen above, this data has 6 including various different socioeconomic/fertility data from 47 different French-speaking Provinces.
+As seen above, this data has 6 variables, including various socioeconomic/fertility data from 47 French-speaking Provinces.
 
 ```{r}
 swiss %>%
@@ -50,7 +50,7 @@ swiss %>%
 
 ```
 
-Lets first graph, fertility vs examination, then fertility vs education. Due to the nature of education potentially affecting the score someone has on the examination I am going to analyze whether adding an interaction term between these two predictor variable will improve the quality of my model.
+Let's first graph fertility vs. examination, then fertility vs education. Due to the nature of education potentially affecting the score someone has on the examination, I will analyze whether adding an interaction term between these two predictor variables will improve the quality of my model.
 
 ```{r}
 
@@ -81,4 +81,4 @@ swissmodel1$fit%>%
 
 ```
 
-The anova performed above tells us to go with the model with less variables, or in other words our model without the interaction term. The second test performed gives us the variation inflation factor of our two predictor variables from our original model. I ran this test because it allows us to know if there is collinearity between our predictor variables. Because both scores our below 5 this means that we shouldn't have to worry about mutlicollinearity. This further supports the evidence that we probably do not need to add a interaction term.
+The ANOVA performed above tells us to go with the model with fewer variables, or in other words, our model without the interaction term. The second test performed gives us the variation inflation factor of our two predictor variables from our original model. I ran this test because it allows us to know if there is collinearity between our predictor variables. Because both scores are below 5, we shouldn't have to worry about multicollinearity. This further supports the evidence that we probably do not need to add an interaction term.

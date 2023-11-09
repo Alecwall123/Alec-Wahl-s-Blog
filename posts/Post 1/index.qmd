@@ -41,7 +41,7 @@ SepsisData %>%
 
 ```
 
-First, we load in the data set and rename a couple of the current Column names
+First, we load in the data set and rename a couple of the current column names
 
 ```{r}
 
@@ -56,8 +56,7 @@ mortality_table %>%
 
 ```
 
-Above is a mortality table created analyze the hospital outcome based on Sex. A hospital outcome of 1 indicates the patient survived. Sex equaling 1 indicates a male. As seen when analyzed both females and males have fairly similar survival rates at 92.15% for females and 93.18% for males.
-
+Above is a mortality table created to analyze a patient's hospital outcome based on Sex. A hospital outcome of 1 indicates the patient survived. Sex equaling 1 indicates a male. As seen when analyzed, females and males have similar survival rates at 92.15% for females and 93.18% for males.
 ```{r}
 ggplot(SepsisData, aes(x = factor(age_years), fill = factor(hospitaloutcome==0))) +
   geom_bar() +
@@ -70,14 +69,14 @@ ggplot(SepsisData, aes(x = factor(age_years), fill = factor(hospitaloutcome==0))
 
 ```
 
-Graphed above we have the Hospital Outcomes for patients as age increases from 0-100. When it equals true that means we had a negative outcome, as seen above there is definitely an increase in negative outcomes as patients get older.
+Graphed above, we have the Hospital Outcomes for patients as age increases from 0-100. When it equals true, that means we had a negative outcome; as seen above, there is an increase in negative outcomes as patients get older.
 
 
 ```{r}
 SepsisData$Sex <- factor(SepsisData$Sex)
 SepsisData$hospitaloutcome <- factor(SepsisData$hospitaloutcome)
 ```
-In code block above, we turn our continuous variables to factors so we can run log function correctly as they are binomial anyways.
+In the code block above, we turn our continuous variables into factor variables so we can run the log function correctly, as they are binomial in nature anyway.
 
 ```{r}
 model_summary1 <- logistic_reg() %>%
@@ -86,7 +85,7 @@ model_summary1 <- logistic_reg() %>%
 tidy(model_summary1)
 
 ```
-Above we chose to run a generalize linear model instead of a regular lm this is due to our output being of a binomial nature. As seen above, of our predictor variables, all have p values below a significance level of .05 besides episode number. In some ways at a biological level this makes sense, due to the nature of sepsis being a infection in the blood stream from any number of different infections. Previous instances of sepsis would not necessary mean someone is at risk of further having Sepsis.
+Above, we chose to run a generalized linear model instead of a regular lm. This is due to our output being of a binomial nature. As seen above, our predictor variables have p values below a significance level of .05 besides episode number. At a biological level, this makes sense because Sepsis is an infection in the bloodstream from any number of different infections. Previous instances of Sepsis would not necessarily mean someone is at risk of further having Sepsis or is better protected from reinfection.
 
 ```{r}
 model_summary2 <- logistic_reg() %>%
@@ -99,12 +98,11 @@ lr_test <- lrtest(model_summary1$fit, model_summary2$fit) %>%
 
 ```
 
-Our final change will be to remove the episode_number variable from the original dataset and analyze if the new model is a better fit with a lrtest. Due to the large P value > 0.05. We can assume the larger model including episode number does not necessarily indicate a significantly better fit.
-
+Our final change will be to remove the episode_number variable from the original dataset and analyze if the new model is a better fit with a lrtest. Due to the large P value > 0.05, we can assume the larger model, including episode number, does not necessarily indicate a significantly better fit.
 
 ```{r}
 SepsisDataUpdated <- SepsisData %>%
   select(-episode_number)
 ```
 
-Our final decision then will be to as seen above, remove episode number and create a new data.
+Our final decision will be to remove episode number and create new data as seen above.

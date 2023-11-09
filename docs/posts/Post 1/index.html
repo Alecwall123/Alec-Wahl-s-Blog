@@ -241,7 +241,7 @@ The following objects are masked from 'package:base':
 # ℹ 110,194 more rows</code></pre>
 </div>
 </div>
-<p>First, we load in the data set and rename a couple of the current Column names</p>
+<p>First, we load in the data set and rename a couple of the current column names</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mortality_table <span class="ot">&lt;-</span> SepsisData <span class="sc">%&gt;%</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sex, hospitaloutcome) <span class="sc">%&gt;%</span></span>
@@ -272,7 +272,7 @@ argument.</code></pre>
 2     1             93.2</code></pre>
 </div>
 </div>
-<p>Above is a mortality table created analyze the hospital outcome based on Sex. A hospital outcome of 1 indicates the patient survived. Sex equaling 1 indicates a male. As seen when analyzed both females and males have fairly similar survival rates at 92.15% for females and 93.18% for males.</p>
+<p>Above is a mortality table created to analyze a patient’s hospital outcome based on Sex. A hospital outcome of 1 indicates the patient survived. Sex equaling 1 indicates a male. As seen when analyzed, females and males have similar survival rates at 92.15% for females and 93.18% for males.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SepsisData, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(age_years), <span class="at">fill =</span> <span class="fu">factor</span>(hospitaloutcome<span class="sc">==</span><span class="dv">0</span>))) <span class="sc">+</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
@@ -284,12 +284,12 @@ argument.</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Graphed above we have the Hospital Outcomes for patients as age increases from 0-100. When it equals true that means we had a negative outcome, as seen above there is definitely an increase in negative outcomes as patients get older.</p>
+<p>Graphed above, we have the Hospital Outcomes for patients as age increases from 0-100. When it equals true, that means we had a negative outcome; as seen above, there is an increase in negative outcomes as patients get older.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>SepsisData<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(SepsisData<span class="sc">$</span>Sex)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>SepsisData<span class="sc">$</span>hospitaloutcome <span class="ot">&lt;-</span> <span class="fu">factor</span>(SepsisData<span class="sc">$</span>hospitaloutcome)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In code block above, we turn our continuous variables to factors so we can run log function correctly as they are binomial anyways.</p>
+<p>In the code block above, we turn our continuous variables into factor variables so we can run the log function correctly, as they are binomial in nature anyway.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model_summary1 <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">%&gt;%</span></span>
@@ -305,7 +305,7 @@ argument.</code></pre>
 4 age_years       -0.0444  0.000828    -53.6  0       </code></pre>
 </div>
 </div>
-<p>Above we chose to run a generalize linear model instead of a regular lm this is due to our output being of a binomial nature. As seen above, of our predictor variables, all have p values below a significance level of .05 besides episode number. In some ways at a biological level this makes sense, due to the nature of sepsis being a infection in the blood stream from any number of different infections. Previous instances of sepsis would not necessary mean someone is at risk of further having Sepsis.</p>
+<p>Above, we chose to run a generalized linear model instead of a regular lm. This is due to our output being of a binomial nature. As seen above, our predictor variables have p values below a significance level of .05 besides episode number. At a biological level, this makes sense because Sepsis is an infection in the bloodstream from any number of different infections. Previous instances of Sepsis would not necessarily mean someone is at risk of further having Sepsis or is better protected from reinfection.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model_summary2 <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"glm"</span>) <span class="sc">%&gt;%</span></span>
@@ -325,12 +325,12 @@ Model 2: hospitaloutcome ~ Sex + age_years
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>Our final change will be to remove the episode_number variable from the original dataset and analyze if the new model is a better fit with a lrtest. Due to the large P value &gt; 0.05. We can assume the larger model including episode number does not necessarily indicate a significantly better fit.</p>
+<p>Our final change will be to remove the episode_number variable from the original dataset and analyze if the new model is a better fit with a lrtest. Due to the large P value &gt; 0.05, we can assume the larger model, including episode number, does not necessarily indicate a significantly better fit.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>SepsisDataUpdated <span class="ot">&lt;-</span> SepsisData <span class="sc">%&gt;%</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>episode_number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Our final decision then will be to as seen above, remove episode number and create a new data.</p>
+<p>Our final decision will be to remove episode number and create new data as seen above.</p>
 
 
 
